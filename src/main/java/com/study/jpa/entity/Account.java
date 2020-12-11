@@ -16,7 +16,7 @@ public class Account {
     @Id @GeneratedValue
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true,length = 10)
     private String userName;
 
     @Enumerated(value = EnumType.STRING)
