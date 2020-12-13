@@ -42,6 +42,6 @@ public class Account {
     @Transient
     private String doNotMap;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     Set<Study> studies = new HashSet<>();
 }
