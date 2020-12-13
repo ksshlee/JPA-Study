@@ -7,6 +7,8 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -27,7 +29,6 @@ public class Account {
     private String password;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false)
     private Date createDate;
 
     @Embedded
@@ -40,4 +41,7 @@ public class Account {
 
     @Transient
     private String doNotMap;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    Set<Study> studies = new HashSet<>();
 }
