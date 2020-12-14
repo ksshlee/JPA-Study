@@ -6,9 +6,23 @@ spring:
       ddl-auto: create
     properties:
       hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
         format_sql: true
   datasource:
     url: jdbc:mysql://localhost:3306/jpa_study?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
     username: test
     password: test
     driver-class-name: com.mysql.cj.jdbc.Driver
+  h2:
+    console:
+      path: /h2
+      enabled: true
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace
