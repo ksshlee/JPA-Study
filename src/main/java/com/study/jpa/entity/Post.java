@@ -10,11 +10,11 @@ import java.util.Set;
 @Entity
 @Getter
 public class Post {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue
     private Long id;
 
     @Setter
-    private String contents;
+    private String content;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Comment> comments;
