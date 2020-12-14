@@ -51,6 +51,10 @@ public class PostRepositoryTest {
 
 
 
+        postRepository.customRepository();
+
+        // 커스텀하게 구현한건 우선순위가 최상단
+        postRepository.findAllById(1L);
     }
 
 
