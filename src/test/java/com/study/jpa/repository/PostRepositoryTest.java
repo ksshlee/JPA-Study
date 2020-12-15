@@ -1,6 +1,7 @@
 package com.study.jpa.repository;
 
 import com.study.jpa.entity.Post;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,8 @@ public class PostRepositoryTest {
     @Autowired
     PostRepository postRepository;
 
-    @Test
-    public void postRepositoryQueryTest(){
-
+    @Before
+    public void beforeJpaTest(){
         Post post1 = Post.builder().content("spring post1").title("spring post1").likeCounts(3L).build();
         Post post2 = Post.builder().content("test content p").title("test title").likeCounts(15L).build();
         Post post3 = Post.builder().content("ppp").title("bbb").likeCounts(16L).build();
@@ -29,7 +29,11 @@ public class PostRepositoryTest {
         postRepository.save(post1);
         postRepository.save(post2);
         postRepository.save(post3);
+    }
 
+
+    @Test
+    public void postRepositoryQueryTest(){
         // 문자열을 content 에 포함한 게시글들 찾기
         List<Post> postList = postRepository.findByContentContainsIgnoreCase("p");
 
@@ -57,5 +61,12 @@ public class PostRepositoryTest {
         postRepository.findAllById(1L);
     }
 
+    @Test
+    public void queryDslTest() {
+        // p 를 포함하고 좋아요 10 이상인 게시글 찾기
+        List<Post> postList = postRepository.findPostWithQueryDsl("p",10L);
 
+        assertThat(postList).first().hasFieldOrPropertyWithValue("likeCounts",16L);
+
+    }
 }
