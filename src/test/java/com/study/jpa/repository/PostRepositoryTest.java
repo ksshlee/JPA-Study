@@ -69,4 +69,13 @@ public class PostRepositoryTest {
         assertThat(postList).first().hasFieldOrPropertyWithValue("likeCounts",16L);
 
     }
+
+    @Test
+    public void namedQuery(){
+        Post post = postRepository.findContent("ppp");
+        Post postNative = postRepository.findContentNative("ppp");
+
+        assertThat(post).isNotNull();
+        assertThat(postNative).isNotNull();
+    }
 }

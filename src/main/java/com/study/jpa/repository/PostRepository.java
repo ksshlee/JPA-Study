@@ -15,4 +15,8 @@ public interface PostRepository extends JpaRepository<Post,Long>,PostCustomRepos
     List<Post> findByContentContainsIgnoreCaseAndLikeCountsGreaterThanEqual(String keyword,Long likeCount);
 
     List<Post> findByContentContainsIgnoreCaseAndLikeCountsGreaterThanEqualOrderByLikeCountsDesc(String keyword,Long likeCount);
+
+    Post findContent (String keyWord);
+
+    Post findContentNative(String keyWord);
 }
