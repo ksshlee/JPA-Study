@@ -3,6 +3,7 @@ package com.study.jpa.repository;
 
 import com.study.jpa.entity.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
 import java.util.List;
@@ -16,7 +17,13 @@ public interface PostRepository extends JpaRepository<Post,Long>,PostCustomRepos
 
     List<Post> findByContentContainsIgnoreCaseAndLikeCountsGreaterThanEqualOrderByLikeCountsDesc(String keyword,Long likeCount);
 
-    Post findContent (String keyWord);
+    Post findContent (String keyword);
 
-    Post findContentNative(String keyWord);
+    Post findContentNative(String keyword);
+
+    @Query("select p from Post As p where p.title = ?1")
+    Post findTitle (String keyword);
+
+    @Query(value = "select * from post where title = ?",nativeQuery = true)
+    Post findTitleNative (String keyword);
 }

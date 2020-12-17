@@ -71,9 +71,18 @@ public class PostRepositoryTest {
     }
 
     @Test
-    public void namedQuery(){
+    public void namedQueryTest(){
         Post post = postRepository.findContent("ppp");
         Post postNative = postRepository.findContentNative("ppp");
+
+        assertThat(post).isNotNull();
+        assertThat(postNative).isNotNull();
+    }
+
+    @Test
+    public void queryTest(){
+        Post post = postRepository.findTitle("bbb");
+        Post postNative = postRepository.findTitleNative("bbb");
 
         assertThat(post).isNotNull();
         assertThat(postNative).isNotNull();
