@@ -9,6 +9,8 @@ import java.util.Set;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NamedQuery(name = "Post.findContent",query = "select p from Post as p where p.content like ?1")
+@NamedNativeQuery(name = "Post.findContentNative", query = "select * from post where content like ?",resultClass = Post.class)
 public class Post {
     @Id @GeneratedValue
     private Long id;
