@@ -2,6 +2,7 @@ package com.study.jpa.repository;
 
 
 import com.study.jpa.entity.Post;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
@@ -26,4 +27,8 @@ public interface PostRepository extends JpaRepository<Post,Long>,PostCustomRepos
 
     @Query(value = "select * from post where title = ?",nativeQuery = true)
     Post findTitleNative (String keyword);
+
+
+    @EntityGraph(attributePaths = {"comments"})
+    Post getById(Long id);
 }
