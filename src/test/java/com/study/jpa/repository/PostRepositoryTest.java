@@ -1,5 +1,6 @@
 package com.study.jpa.repository;
 
+import com.study.jpa.entity.Comment;
 import com.study.jpa.entity.Post;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,9 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.InstanceOfAssertFactories.OPTIONAL;
 
 
 @RunWith(SpringRunner.class)
@@ -19,6 +23,9 @@ public class PostRepositoryTest {
 
     @Autowired
     PostRepository postRepository;
+
+    @Autowired
+    CommentRepository commentRepository;
 
     @Before
     public void beforeJpaTest(){
@@ -86,5 +93,14 @@ public class PostRepositoryTest {
 
         assertThat(post).isNotNull();
         assertThat(postNative).isNotNull();
+    }
+
+    @Test
+    public void entityGraph(){
+        Optional<Comment> comment = commentRepository.findById(1L);
+
+        System.out.println("====================");
+
+        Comment comment1 = commentRepository.getById(1L);
     }
 }
