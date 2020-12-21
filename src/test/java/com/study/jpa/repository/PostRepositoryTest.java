@@ -2,6 +2,8 @@ package com.study.jpa.repository;
 
 import com.study.jpa.entity.Comment;
 import com.study.jpa.entity.Post;
+import com.study.jpa.projection.CommentProjectionByClass;
+import com.study.jpa.projection.CommentProjectionByInterface;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -102,5 +104,41 @@ public class PostRepositoryTest {
         System.out.println("====================");
 
         Comment comment1 = commentRepository.getById(1L);
+    }
+
+    @Test
+    public void projectionTest(){
+        Post post = Post.builder().content("post1").likeCounts(0L).title("post1").build();
+
+        Post savedPost = postRepository.save(post);
+
+        Comment comment = new Comment();
+        comment.setPost(savedPost);
+        comment.setContent("comment1");
+        comment.setLikeCount(11L);
+        comment.setDisLikeCount(0L);
+        comment.setIsBlocked(false);
+
+        Comment savedComment = commentRepository.save(comment);
+
+        commentRepository.findByPost_Id(savedPost.getId(),Comment.class).forEach(c ->{
+            System.out.println(c.getContent());
+        });
+
+        System.out.println("=========================");
+
+
+        commentRepository.findByPost_Id(savedPost.getId(),CommentProjectionByInterface.class).forEach(c ->{
+            System.out.println(c.getTotalReactions());
+        });
+
+        System.out.println("=========================");
+
+
+        commentRepository.findByPost_Id(savedPost.getId(), CommentProjectionByClass.class).forEach(c ->{
+            System.out.println(c.getTotalReactions());
+        });
+
+
     }
 }
